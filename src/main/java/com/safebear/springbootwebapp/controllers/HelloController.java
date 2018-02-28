@@ -5,11 +5,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * Created by CCA_Student on 27/02/2018.
+ * Main page controller
  */
 
 @Controller
 public class HelloController {
+
+    // map the home page request to 'hello world'
     @RequestMapping("/")
     @ResponseBody
     String hello() {
