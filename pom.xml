@@ -25,6 +25,7 @@
         </dependency>
     </dependencies>
     <build>
+        <finalName>safebear</finalName>
         <plugins>
             <!-- Package as an executable jar/war -->
             <plugin>
