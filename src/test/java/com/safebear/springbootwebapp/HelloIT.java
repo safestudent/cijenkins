@@ -1,8 +1,11 @@
 package com.safebear.springbootwebapp;
 
+import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.parsing.Parser;
 import org.junit.Test;
 
 import static com.jayway.restassured.RestAssured.get;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
 /**
@@ -12,6 +15,8 @@ public class HelloIT {
 
     @Test
     public void firstHelloTest(){
-        get("/hello").then().assertThat().body("message", equalTo("Hello"));
+        RestAssured.port=8090;
+        RestAssured.registerParser("text/plain", Parser.TEXT);
+        get("/hello").then().assertThat().body( containsString("Hello"));
     }
 }
