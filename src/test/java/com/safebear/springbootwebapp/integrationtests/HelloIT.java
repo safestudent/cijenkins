@@ -1,4 +1,4 @@
-package com.safebear.springbootwebapp;
+package com.safebear.springbootwebapp.integrationtests;
 
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.parsing.Parser;
