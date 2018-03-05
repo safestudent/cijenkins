@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Main page controller
  */
 
-@RestController
+@Controller
 public class HelloController {
 
     // map the home page request to 'hello world'

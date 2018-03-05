@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         tags = "~@to-do",
         glue = "com.safebear.springbootwebapp.automationtests",
-        features = "classpath:hello.features/hello.feature",
+        features = {"classpath:hello.features/hello.feature", "classpath:calculator.features/add.feature"},
         plugin = {"pretty", "html:target/cucumber"}
 )
 public class RunCukesTestIT {

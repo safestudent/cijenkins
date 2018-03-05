@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http:www.thymeleaf.org">
+<head>
+    <title>Addition</title>
+    <meta http-equiv="Content-Type" content="text/html: charset=UTF-8" />
+</head>
+<body>
+    <h1>Addition Result</h1>
+    <p th:text="'Number 1 = ' + ${calculator.num1}"/>
+    <p th:text="'Number 2 = ' + ${calculator.num2}"/>
+    <p th:text="'Result = ' + ${calculator.result}"/>
+    <a href="/add">Add more numbers</a>
+</body>
+</html>

@@ -19,4 +19,11 @@ public class HelloIT {
         RestAssured.registerParser("text/plain", Parser.TEXT);
         get("/hello").then().assertThat().body( containsString("Hello"));
     }
+
+//    @Test
+//    public void calculatorAddTest(){
+//        RestAssured.port=8090;
+//        RestAssured.registerParser("text/plain", Parser.TEXT);
+//        get("/add").then().assertThat().body( containsString("Hello"));
+//    }
 }
