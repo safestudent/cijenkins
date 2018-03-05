@@ -29,7 +29,13 @@ public class StepDefs {
     private HelloPage helloPage;
     private AddPage addPage;
 
-    // Getting the URL from the mvn command
+    // Getting the port number from the mvn command
+    private String PORT = System.getProperty("port");
+
+    // getting the package name
+    private String PACKAGE = System.getProperty("pkg");
+
+    // Getting the baseURL from the mvn command
     private String URL = System.getProperty("url");
 
     /**
@@ -52,7 +58,20 @@ public class StepDefs {
 
     @When("^we navigate to the (.+) page$")
     public void we_navigate_to_the_page(String page)  {
-        driver.get(URL + "/" + page);
+
+        // empty url variable
+        String url;
+
+        // updating the url value from the mvn properties
+        if (PACKAGE != null){
+            // case if the code has been deployed
+            url = URL + ":" + PORT + "/" + PACKAGE + "/" + page;
+        } else {
+            // case if running locally
+            url = URL + ":" + PORT + "/" + page;
+        }
+
+        driver.get(url);
         try {
             Thread.sleep(debug);
         } catch (InterruptedException e) {
