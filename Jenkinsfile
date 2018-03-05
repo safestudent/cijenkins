@@ -1,6 +1,6 @@
 pipeline {
     // run on any agent
-    agent { any }
+    agent any
     stages {
         stage('Build with Unit Testing') {
             // run the mvn package command to ensure build the app and run the unit tests
