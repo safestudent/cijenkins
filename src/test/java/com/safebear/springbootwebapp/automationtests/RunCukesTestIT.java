@@ -5,7 +5,16 @@ import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
 
 /**
- * Created by CCA_Student on 11/12/2017.
+ * TestRunner for the Cucumber selenium tests. Set the following in here:
+ * 1. The tests that will and won't run (tags)
+ * 2. The glue for the StepDefs
+ * 3. The features to run
+ * 4. Any plugins (e.g. reporting)
+ *
+ * @author simon stratton
+ * @version 1.0
+ * @since 05/03/18
+ *
  */
 @RunWith(Cucumber.class)
 @CucumberOptions(

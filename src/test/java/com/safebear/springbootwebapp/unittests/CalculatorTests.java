@@ -5,12 +5,21 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by CCA_Student on 05/03/2018.
+ * Very basic unit tests for the calculator class.
+ * Ideally we'd also be using Spring Boot's testing frameworks and mocks also.
+ * @author simon stratton
+ * @version 1.0
+ * @since 05/03/18
  */
 public class CalculatorTests {
 
+    // initialise a calculator object
     private Calculator calculator = new Calculator();
 
+    /**
+     * When you choose two numbers
+     * Then the result returned is the addition of the two numbers
+     */
     @Test
     public void testAddition(){
         calculator.setNum1("2");

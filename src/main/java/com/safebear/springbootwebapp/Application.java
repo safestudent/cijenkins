@@ -6,7 +6,11 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 /**
- * Application main class
+ * Application main class, so we can build our Java package
+ *
+ * @author Simon Stratton
+ * @version 1.0
+ * @since 05/03/2018
  */
 
 @SpringBootApplication
@@ -20,5 +24,4 @@ public class Application extends SpringBootServletInitializer {
     public static void main(String[] args){
         SpringApplication.run(Application.class, args);
     }
-
 }

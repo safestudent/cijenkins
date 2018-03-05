@@ -6,13 +6,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Main page controller
+ * Creates a 'Hello World' message on the /hello page
+ *
+ * @author Simon Stratton
+ * @version 1.0
+ * @since 05/03/18
  */
 
 @Controller
 public class HelloController {
 
-    // map the home page request to 'hello world'
+    /**
+     * Maps the /hello page to this response
+     * @return String the Hello World message
+     */
     @RequestMapping("/hello")
     @ResponseBody
     String hello() {

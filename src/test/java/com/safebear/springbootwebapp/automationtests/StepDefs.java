@@ -12,15 +12,29 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import static junit.framework.TestCase.assertTrue;
 
 /**
- * Created by CCA_Student on 01/03/2018.
+ * The StepDefs class for our cucumber selenium tests.
+ *
+ * @author simon stratton
+ * @version 1.0
+ * @since 05/03/18
  */
 public class StepDefs {
 
-    ChromeDriver driver;
-    HelloPage helloPage;
-    AddPage addPage;
-    String URL = System.getProperty("url");
+    // Global variable for storing our WebDriver
+    private WebDriver driver;
+    // Debug variable so we can slow down the tests if we want to see what's happening
+    private int debug = 2000; // milliseconds
 
+    // Global variables for our Web Page Objects
+    private HelloPage helloPage;
+    private AddPage addPage;
+
+    // Getting the URL from the mvn command
+    private String URL = System.getProperty("url");
+
+    /**
+     * Initialising our driver for a particular browser and initialising our Page Objects
+     */
     @Before
     public void setUp(){
         driver = new ChromeDriver();
@@ -28,6 +42,9 @@ public class StepDefs {
         addPage = new AddPage(driver);
     }
 
+    /**
+     * Close the browsers after the tests are complete
+     */
     @After
     public void tearDown(){
         driver.quit();
@@ -37,7 +54,7 @@ public class StepDefs {
     public void we_navigate_to_the_page(String page)  {
         driver.get(URL + "/" + page);
         try {
-            Thread.sleep(2000);
+            Thread.sleep(debug);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
