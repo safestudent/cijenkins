@@ -107,7 +107,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>safebear</finalName>
+        <!-- <finalName>safebear</finalName> -->
         <plugins>
             <!-- compile and run as Java 8 -->
             <plugin>
@@ -182,6 +182,9 @@
                             <groupId>c${project.groupId}</groupId>
                             <artifactId>${project.artifactId}</artifactId>
                             <type>${project.packaging}</type>
+                            <properties>
+                                <context>safebear</context>
+                            </properties>
                         </deployable>
                     </deployables>
                 </configuration>
