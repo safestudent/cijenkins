@@ -60,7 +60,7 @@ pipeline {
             deploys to the 9999 environment. */
             steps {
                 timeout(time: 5, unit: 'DAYS') {
-                    input message: 'Approve PRODUCTION deployment?', submitter: student
+                    input message: 'Approve PRODUCTION deployment?', submitter: 'student'
                 }
 
                 build job: 'deploy-to-prod'
