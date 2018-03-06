@@ -101,12 +101,13 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>safebear</artifactId>
+            <artifactId>${project.artifactId}</artifactId>
+            <version>${project.version}</version>
             <type>war</type>
         </dependency>
     </dependencies>
     <build>
-        <finalName>safebear</finalName>
+        <!-- finalName>safebear-${project.version}</finalName -->
         <plugins>
             <!-- compile and run as Java 8 -->
             <plugin>
@@ -153,9 +154,8 @@
                     <finalName>safebear</finalName>
                 </configuration>
             </plugin>
-
+            <!-- Cargo-Plugin: Hot deploy to remote tomcat8x running instance -->
             <plugin>
-                <!-- Cargo-Plugin: Hot deploy to remote tomcat8x running instance -->
                 <groupId>org.codehaus.cargo</groupId>
                 <artifactId>cargo-maven2-plugin</artifactId>
                 <version>1.6.7</version>
@@ -178,7 +178,7 @@
                     </deployer>
                     <deployables>
                         <deployable>
-                            <groupId>c${project.groupId}</groupId>
+                            <groupId>${project.groupId}</groupId>
                             <artifactId>safebear</artifactId>
                             <type>${project.packaging}</type>
                             <properties>
