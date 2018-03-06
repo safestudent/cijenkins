@@ -108,11 +108,10 @@ pipeline {
             /* must be a manual step
             deploys to the 9999 environment. */
             steps {
-                /*
+
                 timeout(time: 5, unit: 'DAYS') {
                     input message: 'Approve PRODUCTION deployment?', submitter: 'student'
                 }
-                */
 
                 // Deploy using jenkins project
                 //build job: 'deploy-to-prod'
