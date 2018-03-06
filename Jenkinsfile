@@ -35,7 +35,7 @@ pipeline {
             /* Deploy to the test environment so we can run our integration and BDD tests */
             steps {
                 // This would be if you had the deploy job configured in Jenkins and weren't fully automating the
-                build job: 'Deploy-to-staging'
+                build job: 'deploy-to-staging'
             }
         }
 
@@ -63,7 +63,7 @@ pipeline {
                     input message: 'Approve PRODUCTION deployment?', submitter: student
                 }
 
-                build job: 'Deploy-to-Prod'
+                build job: 'deploy-to-prod'
             }
             post {
                 success {
