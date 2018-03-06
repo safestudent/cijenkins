@@ -12,7 +12,7 @@ pipeline {
         stage('Build with Unit Testing') {
             /* run the mvn package command to ensure build the app and run the unit  */
             steps {
-                bat'mvn clean package'
+                bat 'mvn clean package'
             }
             post {
                 /* only run if the last step succeeds */
