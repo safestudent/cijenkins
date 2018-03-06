@@ -30,6 +30,11 @@ pipeline {
             steps {
                 bat 'mvn checkstyle:checkstyle'
             }
+            post {
+                success {
+                    checkstyle canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '', unHealthy: ''
+                }
+            }
         }
         stage('Deploy to Test') {
             /* Deploy to the test environment so we can run our integration and BDD tests */
