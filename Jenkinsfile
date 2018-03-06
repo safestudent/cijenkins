@@ -47,7 +47,7 @@ pipeline {
                 // build job: 'deploy-to-staging'
 
                 // deploy using the cargo plugin in the pom.xml maven file - see the profiles for details
-                bat 'mvn cargo:redeploy -Ptest1'
+                bat 'mvn cargo:redeploy -P test1'
             }
         }
 
@@ -95,7 +95,7 @@ pipeline {
                 //build job: 'deploy-to-prod'
 
                 // deploy using the cargo plugin in the pom.xml maven file - see the profiles for details
-                bat 'mvn cargo:redeploy -Pprod1'
+                bat 'mvn cargo:redeploy -P prod1'
             }
             post {
                 success {
