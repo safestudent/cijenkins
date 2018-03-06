@@ -47,61 +47,67 @@ pipeline {
                 }
             }
         }
-        stage('Static Analysis') {
-            /* run the mvn checkstyle:checkstyle command to run the static analysis. Can be
-            done in parallel to the Build and Unit Testing step. */
-            steps {
-                bat 'mvn checkstyle:checkstyle'
-            }
-            post {
-                success {
-                    checkstyle canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '', unHealthy: ''
+        stage('Deploy to Test and Static Analysis') {
+            parallel {
+                stage('Static Analysis') {
+                    /* run the mvn checkstyle:checkstyle command to run the static analysis. Can be
+                    done in parallel to the Build and Unit Testing step. */
+                    steps {
+                        bat 'mvn checkstyle:checkstyle'
+                    }
+                    post {
+                        success {
+                            checkstyle canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '', unHealthy: ''
+                        }
+                    }
+                }
+                stage('Deploy to Test') {
+                    /* Deploy to the test environment so we can run our integration and BDD tests */
+                    steps {
+                        // This would be if you had the deploy job configured in Jenkins and weren't fully automating the
+                        // build job: 'deploy-to-staging'
+
+                        // deploy using the cargo plugin in the pom.xml maven file - see the profiles for details
+                        bat "mvn cargo:redeploy -Dcargo.hostname=\"${params.test_hostname}\" -Dcargo.servlet.port=\"${params.test_port}\" -Dcargo.username=\"${params.test_username}\" -Dcargo.password=\"${params.test_password}\""
+                    }
                 }
             }
         }
-        stage('Deploy to Test') {
-            /* Deploy to the test environment so we can run our integration and BDD tests */
-            steps {
-                // This would be if you had the deploy job configured in Jenkins and weren't fully automating the
-                // build job: 'deploy-to-staging'
+        stage('Integration Tests'){
+            parallel {
+                stage('REST API Tests') {
+                    /* run the mvn -Dtest=HelloIT verify -Durl=http://192.168.33.14" -Dport="8888" -Dpkg="safebear"
+                    tests to ensure that the rest API is working ok */
+                    steps {
+                        bat 'mvn -Dtest=HelloIT verify -Durl="http://192.168.33.14" -Dport="8888" -Dpkg="safebear"'
+                    }
+                    post {
+                        always {
+                            junit "**/target/failsafe-reports/*.xml"
+                        }
+                    }
 
-                // deploy using the cargo plugin in the pom.xml maven file - see the profiles for details
-                bat "mvn cargo:redeploy -Dcargo.hostname=\"${params.test_hostname}\" -Dcargo.servlet.port=\"${params.test_port}\" -Dcargo.username=\"${params.test_username}\" -Dcargo.password=\"${params.test_password}\""
-            }
-        }
-
-        stage('Integration Tests') {
-            /* run the mvn -Dtest=HelloIT verify -Durl=http://192.168.33.14" -Dport="8888" -Dpkg="safebear"
-            tests to ensure that the rest API is working ok */
-            steps {
-                bat 'mvn -Dtest=HelloIT verify -Durl="http://192.168.33.14" -Dport="8888" -Dpkg="safebear"'
-            }
-            post {
-                always {
-                    junit "**/target/failsafe-reports/*.xml"
+                }
+                stage('BDD Requirements Testing') {
+                    /* run the mvn -Dtest RunCukesTestIT verify -Durl="http://192.168.33.14" -Dport="8888" -Dpkg="safebear"
+                    tests to ensure that the app meets the requirements */
+                    steps {
+                        bat 'mvn -Dtest=RunCukesTestIT verify -Durl="http://192.168.33.14" -Dport="8888" -Dpkg="safebear"'
+                    }
+                    post {
+                        always {
+                            publishHTML([
+                                    allowMissing         : false,
+                                    alwaysLinkToLastBuild: false,
+                                    keepAll              : false,
+                                    reportDir            : '**/target/cucumber',
+                                    reportFiles          : 'index.html',
+                                    reportName           : 'BDD Report',
+                                    reportTitles         : ''])
+                        }
+                    }
                 }
             }
-
-        }
-        stage('BDD Requirements Testing') {
-            /* run the mvn -Dtest RunCukesTestIT verify -Durl="http://192.168.33.14" -Dport="8888" -Dpkg="safebear"
-            tests to ensure that the app meets the requirements */
-            steps {
-                bat 'mvn -Dtest=RunCukesTestIT verify -Durl="http://192.168.33.14" -Dport="8888" -Dpkg="safebear"'
-            }
-            post {
-                always {
-                    publishHTML([
-                            allowMissing: false,
-                            alwaysLinkToLastBuild: false,
-                            keepAll: false,
-                            reportDir: '**/target/cucumber',
-                            reportFiles: 'index.html',
-                            reportName: 'BDD Report',
-                            reportTitles: ''])
-                }
-            }
-
         }
         stage('Deploy to Production') {
             /* must be a manual step

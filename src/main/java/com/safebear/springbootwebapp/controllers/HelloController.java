@@ -23,7 +23,7 @@ public class HelloController {
     @RequestMapping("/hello")
     @ResponseBody
     String hello() {
-        return "Hello World! Version 2";
+        return "Hello World! Version 3";
     }
 
 }
