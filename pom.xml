@@ -167,19 +167,16 @@
                             </cargo.tomcat.manager.url>
                         </properties>
                     </configuration>
-                    <deployer>
-                        <type>remote</type>
                         <deployables>
                             <deployable>
-                                <groupId>com.safebear</groupId>
-                                <artifactId>safebear</artifactId>
+                                <groupId>c${groupId}</groupId>
+                                <artifactId>${artifactId}</artifactId>
                                 <type>war</type>
                                 <properties>
-                                    <context>springBootWebApp</context>
+                                    <context>latest</context>
                                 </properties>
                             </deployable>
                         </deployables>
-                    </deployer>
                 </configuration>
             </plugin>
         </plugins>
