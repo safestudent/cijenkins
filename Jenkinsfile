@@ -43,7 +43,7 @@ pipeline {
             /* run the mvn -Dtest=HelloIT verify -Durl=http://192.168.33.14" -Dport="8888" -Dpkg="safebear"
             tests to ensure that the rest API is working ok */
             steps {
-                bat 'mvn -Dtest HelloIT verify -Durl="http://192.168.33.14" -Dport="8888" -Dpkg="safebear"'
+                bat 'mvn -Dtest=HelloIT verify -Durl="http://192.168.33.14" -Dport="8888" -Dpkg="safebear"'
             }
 
         }
