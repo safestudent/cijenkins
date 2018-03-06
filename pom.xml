@@ -179,7 +179,7 @@
                     <deployables>
                         <deployable>
                             <groupId>c${project.groupId}</groupId>
-                            <artifactId>${project.artifactId}</artifactId>
+                            <artifactId>safebear</artifactId>
                             <type>${project.packaging}</type>
                             <properties>
                                 <context>safebear</context>
