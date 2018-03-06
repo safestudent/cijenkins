@@ -22,6 +22,10 @@ pipeline {
                     // archive the artifacts so we can build once and then use them later to deploy
                     archiveArtifacts artifacts: '**/target/*.war'
                 }
+
+                always {
+                    junit "**/target/surefire-reports/*.xml"
+                }
             }
         }
         stage('Static Analysis') {
@@ -53,6 +57,11 @@ pipeline {
             steps {
                 bat 'mvn -Dtest=HelloIT verify -Durl="http://192.168.33.14" -Dport="8888" -Dpkg="safebear"'
             }
+            post {
+                always {
+                    junit "**/target/failsafe-reports/*.xml"
+                }
+            }
 
         }
         stage('BDD Requirements Testing') {
@@ -60,6 +69,18 @@ pipeline {
             tests to ensure that the app meets the requirements */
             steps {
                 bat 'mvn -Dtest=RunCukesTestIT verify -Durl="http://192.168.33.14" -Dport="8888" -Dpkg="safebear"'
+            }
+            post {
+                always {
+                    publishHTML([
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: false,
+                            keepAll: false,
+                            reportDir: '**/target/cucumber/',
+                            reportFiles: 'index.html',
+                            reportName: 'BDD Report',
+                            reportTitles: ''])
+                }
             }
 
         }

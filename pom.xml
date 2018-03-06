@@ -18,6 +18,7 @@
         <cargo.manager.url>http://192.168.33.14:8888/manager</cargo.manager.url>
         <cargo.username>tomcat</cargo.username>
         <cargo.password>tomcat</cargo.password>
+        <skipSurefireReport>true</skipSurefireReport>
     </properties>
     <profiles>
         <!-- Test Environment deployment target -->
@@ -169,17 +170,14 @@
                     </configuration>
                     <deployer>
                         <type>remote</type>
-                        <deployables>
-                            <deployable>
-                                <groupId>c${project.groupId}</groupId>
-                                <artifactId>${project.artifactId}</artifactId>
-                                <type>war</type>
-                                <properties>
-                                    <context>safebear</context>
-                                </properties>
-                            </deployable>
-                        </deployables>
                     </deployer>
+                    <deployables>
+                        <deployable>
+                            <groupId>c${project.groupId}</groupId>
+                            <artifactId>${project.artifactId}</artifactId>
+                            <type>${project.packaging}</type>
+                        </deployable>
+                    </deployables>
                 </configuration>
             </plugin>
         </plugins>
