@@ -28,14 +28,22 @@ pipeline {
             /* run the mvn checkstyle:checkstyle command to run the static analysis. Can be
             done in parallel to the Build and Unit Testing step. */
             steps {
-                echo "static analysis..."
+                bat 'mvn checkstyle:checkstyle'
             }
         }
+        stage('Deploy to Test') {
+            /* Deploy to the test environment so we can run our integration and BDD tests */
+            steps {
+                // This would be if you had the deploy job configured in Jenkins and weren't fully automating the
+                build job: 'Deploy-to-staging'
+            }
+        }
+
         stage('Integration Tests') {
             /* run the mvn -Dtest HelloIT verify -Durl 'http://192.168.33.14' -Dport="8888" -Dpkg="safebear"
             tests to ensure that the rest API is working ok */
             steps {
-                echo "integration tests"
+                bat 'mvn -Dtest HelloIT verify -Durl \'http://192.168.33.14\' -Dport="8888" -Dpkg="safebear"'
             }
 
         }
@@ -43,7 +51,7 @@ pipeline {
             /* run the mvn -Dtest RunCukesTestIT verify -Durl 'http://192.168.33.14' -Dport="8888" -Dpkg="safebear"
             tests to ensure that the app meets the requirements */
             steps {
-                echo "BDD cucumber tests"
+                bat 'mvn -Dtest RunCukesTestIT verify -Durl \'http://192.168.33.14\' -Dport="8888" -Dpkg="safebear"'
             }
 
         }
@@ -51,7 +59,19 @@ pipeline {
             /* must be a manual step
             deploys to the 9999 environment. */
             steps {
-                echo "Deploying to production"
+                timeout(time: 5, unit: 'DAYS') {
+                    input message: 'Approve PRODUCTION deployment?', submitter: student
+                }
+
+                build job: 'Deploy-to-Prod'
+            }
+            post {
+                success {
+                    echo 'Code deployed to Production'
+                }
+                failure {
+                    echo "Deployment failed"
+                }
             }
 
         }
