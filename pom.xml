@@ -18,7 +18,8 @@
         <cargo.manager.url>http://192.168.33.14:8888/manager</cargo.manager.url>
         <cargo.username>tomcat</cargo.username>
         <cargo.password>tomcat</cargo.password>
-        <skipSurefireReport>true</skipSurefireReport>
+        <cargo.hostname>192.168.33.14</cargo.hostname>
+        <cargo.servlet.port>8888</cargo.servlet.port>
     </properties>
     <profiles>
         <!-- Test Environment deployment target -->
@@ -28,6 +29,8 @@
                     <cargo.manager.url>http://192.168.33.14:8888/manager</cargo.manager.url>
                     <cargo.username>tomcat</cargo.username>
                     <cargo.password>tomcat</cargo.password>
+                    <cargo.hostname>192.168.33.14</cargo.hostname>
+                    <cargo.servlet.port>8888</cargo.servlet.port>
             </properties>
         </profile>
         <!-- Prod Env deployment target -->
@@ -37,6 +40,8 @@
                 <cargo.manager.url>http://192.168.33.14:9999/manager</cargo.manager.url>
                 <cargo.username>tomcat</cargo.username>
                 <cargo.password>tomcat</cargo.password>
+                <cargo.hostname>192.168.33.14</cargo.hostname>
+                <cargo.servlet.port>9999</cargo.servlet.port>
             </properties>
         </profile>
     </profiles>
@@ -169,8 +174,9 @@
                         <properties>
                             <cargo.remote.username>${cargo.username}</cargo.remote.username>
                             <cargo.remote.password>${cargo.password}</cargo.remote.password>
-                            <cargo.tomcat.manager.url>${cargo.manager.url}
-                            </cargo.tomcat.manager.url>
+                            <cargo.tomcat.manager.url>${cargo.manager.url}</cargo.tomcat.manager.url>
+                            <cargo.hostname>${cargo.hostname}</cargo.hostname>
+                            <cargo.servlet.port>${cargo.servlet.port}</cargo.servlet.port>
                         </properties>
                     </configuration>
                     <deployer>
