@@ -15,7 +15,6 @@
     </parent>
     <properties>
         <!-- default cargo deployment target -->
-        <cargo.manager.url>http://192.168.33.14:8888/manager</cargo.manager.url>
         <cargo.username>tomcat</cargo.username>
         <cargo.password>tomcat</cargo.password>
         <cargo.hostname>192.168.33.14</cargo.hostname>
@@ -26,7 +25,6 @@
         <profile>
             <id>test1</id>
             <properties>
-                    <cargo.manager.url>http://192.168.33.14:8888/manager</cargo.manager.url>
                     <cargo.username>tomcat</cargo.username>
                     <cargo.password>tomcat</cargo.password>
                     <cargo.hostname>192.168.33.14</cargo.hostname>
@@ -37,7 +35,6 @@
         <profile>
             <id>prod1</id>
             <properties>
-                <cargo.manager.url>http://192.168.33.14:9999/manager</cargo.manager.url>
                 <cargo.username>tomcat</cargo.username>
                 <cargo.password>tomcat</cargo.password>
                 <cargo.hostname>192.168.33.14</cargo.hostname>
@@ -174,7 +171,6 @@
                         <properties>
                             <cargo.remote.username>${cargo.username}</cargo.remote.username>
                             <cargo.remote.password>${cargo.password}</cargo.remote.password>
-                            <cargo.tomcat.manager.url>${cargo.manager.url}</cargo.tomcat.manager.url>
                             <cargo.hostname>${cargo.hostname}</cargo.hostname>
                             <cargo.servlet.port>${cargo.servlet.port}</cargo.servlet.port>
                         </properties>

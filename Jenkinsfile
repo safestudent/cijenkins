@@ -7,6 +7,25 @@ pipeline {
     //run on any agent
     agent any
 
+    parameters {
+
+        // test environment
+        string(name: 'test_hostname', defaultValue: '192.168.33.14', description: 'hostname of the test environment')
+        string(name: 'test_port', defaultValue: '8888', description: 'port of the test environment')
+        string(name: 'test_username', defaultValue: 'tomcat', description: 'username of the test environment')
+        string(name: 'test_password', defaultValue: 'tomcat', description: 'password of the test environment')
+
+        // prod environment
+        string(name: 'prod_hostname', defaultValue: '192.168.33.14', description: 'hostname of the test environment')
+        string(name: 'prod_port', defaultValue: '9999', description: 'hostname of the test environment')
+        string(name: 'prod_username', defaultValue: 'tomcat', description: 'hostname of the test environment')
+        string(name: 'prod_password', defaultValue: 'tomcat', description: 'hostname of the test environment')
+    }
+
+    triggers {
+        pollSCM('* * * * *')
+    }
+
     // Pipeline stages
     stages {
         stage('Build with Unit Testing') {
@@ -47,7 +66,7 @@ pipeline {
                 // build job: 'deploy-to-staging'
 
                 // deploy using the cargo plugin in the pom.xml maven file - see the profiles for details
-                bat 'mvn cargo:redeploy -P test1'
+                bat 'mvn cargo:redeploy -Dcargo.hostname="${params.test_hostname}" -Dcargo.servlet.port="${params.test_port}" -Dcargo.username="${params.test_username}" -Dcargo.password="${params.test_password}"'
             }
         }
 
@@ -76,7 +95,7 @@ pipeline {
                             allowMissing: false,
                             alwaysLinkToLastBuild: false,
                             keepAll: false,
-                            reportDir: '**/target/cucumber/',
+                            reportDir: '**/target/cucumber',
                             reportFiles: 'index.html',
                             reportName: 'BDD Report',
                             reportTitles: ''])
@@ -95,7 +114,7 @@ pipeline {
                 //build job: 'deploy-to-prod'
 
                 // deploy using the cargo plugin in the pom.xml maven file - see the profiles for details
-                bat 'mvn cargo:redeploy -P prod1'
+                bat 'mvn cargo:redeploy -Dcargo.hostname="${params.prod_hostname}" -Dcargo.servlet.port="${params.prod_port}" -Dcargo.username="${params.prod_username}" -Dcargo.password="${params.prod_password}"'
             }
             post {
                 success {
