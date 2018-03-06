@@ -13,6 +13,32 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.5.10.RELEASE</version>
     </parent>
+    <properties>
+        <!-- default cargo deployment target -->
+        <cargo.manager.url>http://192.168.33.14:8888/manager</cargo.manager.url>
+        <cargo.username>tomcat</cargo.username>
+        <cargo.password>tomcat</cargo.password>
+    </properties>
+    <profiles>
+        <!-- Test Environment deployment target -->
+        <profile>
+            <id>test1</id>
+            <properties>
+                    <cargo.manager.url>http://192.168.33.14:8888/manager</cargo.manager.url>
+                    <cargo.username>tomcat</cargo.username>
+                    <cargo.password>tomcat</cargo.password>
+            </properties>
+        </profile>
+        <!-- Prod Env deployment target -->
+        <profile>
+            <id>prod1</id>
+            <properties>
+                <cargo.manager.url>http://192.168.33.14:9999/manager</cargo.manager.url>
+                <cargo.username>tomcat</cargo.username>
+                <cargo.password>tomcat</cargo.password>
+            </properties>
+        </profile>
+    </profiles>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -119,6 +145,41 @@
                 </executions>
                 <configuration>
                     <finalName>safebear</finalName>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <!-- Cargo-Plugin: Hot deploy to remote tomcat8x running instance -->
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.6.7</version>
+                <configuration>
+                    <container>
+                        <containerId>tomcat8x</containerId>
+                        <type>remote</type>
+                    </container>
+                    <configuration>
+                        <type>runtime</type>
+                        <properties>
+                            <cargo.remote.username>${cargo.username}</cargo.remote.username>
+                            <cargo.remote.password>${cargo.password}</cargo.remote.password>
+                            <cargo.tomcat.manager.url>${cargo.manager.url}
+                            </cargo.tomcat.manager.url>
+                        </properties>
+                    </configuration>
+                    <deployer>
+                        <type>remote</type>
+                        <deployables>
+                            <deployable>
+                                <groupId>com.safebear</groupId>
+                                <artifactId>safebear</artifactId>
+                                <type>war</type>
+                                <properties>
+                                    <context>springBootWebApp</context>
+                                </properties>
+                            </deployable>
+                        </deployables>
+                    </deployer>
                 </configuration>
             </plugin>
         </plugins>

@@ -35,7 +35,10 @@ pipeline {
             /* Deploy to the test environment so we can run our integration and BDD tests */
             steps {
                 // This would be if you had the deploy job configured in Jenkins and weren't fully automating the
-                build job: 'deploy-to-staging'
+                // build job: 'deploy-to-staging'
+
+                // deploy using the cargo plugin in the pom.xml maven file - see the profiles for details
+                bat 'mvn cargo:redeploy -Ptest1'
             }
         }
 
@@ -62,8 +65,11 @@ pipeline {
                 timeout(time: 5, unit: 'DAYS') {
                     input message: 'Approve PRODUCTION deployment?', submitter: 'student'
                 }
+                // Deploy using jenkins project
+                //build job: 'deploy-to-prod'
 
-                build job: 'deploy-to-prod'
+                // deploy using the cargo plugin in the pom.xml maven file - see the profiles for details
+                bat 'mvn cargo:redeploy -Pprod1'
             }
             post {
                 success {
