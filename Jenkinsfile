@@ -66,7 +66,7 @@ pipeline {
                 // build job: 'deploy-to-staging'
 
                 // deploy using the cargo plugin in the pom.xml maven file - see the profiles for details
-                bat 'mvn cargo:redeploy -Dcargo.hostname=${params.test_hostname} -Dcargo.servlet.port=${params.test_port} -Dcargo.username=${params.test_username} -Dcargo.password=${params.test_password}'
+                bat "mvn cargo:redeploy -Dcargo.hostname=\"${params.test_hostname}\" -Dcargo.servlet.port=\"${params.test_port}\" -Dcargo.username=\"${params.test_username}\" -Dcargo.password=\"${params.test_password}\""
             }
         }
 
@@ -114,7 +114,7 @@ pipeline {
                 //build job: 'deploy-to-prod'
 
                 // deploy using the cargo plugin in the pom.xml maven file - see the profiles for details
-                bat 'mvn cargo:redeploy -Dcargo.hostname="${params.prod_hostname}" -Dcargo.servlet.port="${params.prod_port}" -Dcargo.username="${params.prod_username}" -Dcargo.password="${params.prod_password}"'
+                bat "mvn cargo:redeploy -Dcargo.hostname=\"${params.prod_hostname}\" -Dcargo.servlet.port=\"${params.prod_port}\" -Dcargo.username=\"${params.prod_username}\" -Dcargo.password=\"${params.prod_password}\""
             }
             post {
                 success {
