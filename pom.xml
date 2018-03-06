@@ -99,12 +99,12 @@
             <version>1.2.5</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
+        <!-- dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>${project.artifactId}</artifactId>
             <version>${project.version}</version>
             <type>war</type>
-        </dependency>
+        </dependency -->
     </dependencies>
     <build>
         <!-- <finalName>safebear</finalName> -->
