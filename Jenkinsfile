@@ -31,7 +31,7 @@ pipeline {
         stage('Build with Unit Testing') {
             /* run the mvn package command to ensure build the app and run the unit  */
             steps {
-                bat 'mvn clean package'
+                sh 'mvn clean package'
             }
             post {
                 /* only run if the last step succeeds */
@@ -53,7 +53,7 @@ pipeline {
                     /* run the mvn checkstyle:checkstyle command to run the static analysis. Can be
                     done in parallel to the Build and Unit Testing step. */
                     steps {
-                        bat 'mvn checkstyle:checkstyle'
+                        sh 'mvn checkstyle:checkstyle'
                     }
                     post {
                         success {
@@ -68,7 +68,7 @@ pipeline {
                         // build job: 'deploy-to-staging'
 
                         // deploy using the cargo plugin in the pom.xml maven file - see the profiles for details
-                        bat "mvn cargo:redeploy -Dcargo.hostname=\"${params.test_hostname}\" -Dcargo.servlet.port=\"${params.test_port}\" -Dcargo.username=\"${params.test_username}\" -Dcargo.password=\"${params.test_password}\""
+                        sh "mvn cargo:redeploy -Dcargo.hostname=\"${params.test_hostname}\" -Dcargo.servlet.port=\"${params.test_port}\" -Dcargo.username=\"${params.test_username}\" -Dcargo.password=\"${params.test_password}\""
                     }
                 }
             }
@@ -77,7 +77,7 @@ pipeline {
             /* run the mvn -Dtest=HelloIT verify -Durl=http://192.168.33.14" -Dport="8888" -Dpkg="safebear"
             tests to ensure that the rest API is working ok */
             steps {
-                        bat 'mvn -Dtest=HelloIT verify -Durl="http://192.168.33.14" -Dport="8888" -Dpkg="safebear"'
+                        sh 'mvn -Dtest=HelloIT verify -Durl="http://192.168.33.14" -Dport="8888" -Dpkg="safebear"'
             }
             post {
                 always {
@@ -89,7 +89,7 @@ pipeline {
             /* run the mvn -Dtest RunCukesTestIT verify -Durl="http://192.168.33.14" -Dport="8888" -Dpkg="safebear"
             tests to ensure that the app meets the requirements */
             steps {
-                bat 'mvn -Dtest=RunCukesTestIT verify -Durl="http://192.168.33.14" -Dport="8888" -Dpkg="safebear"'
+                sh 'mvn -Dtest=RunCukesTestIT verify -Durl="http://192.168.33.14" -Dport="8888" -Dpkg="safebear"'
             }
             post {
                 always {
@@ -117,7 +117,7 @@ pipeline {
                 //build job: 'deploy-to-prod'
 
                 // deploy using the cargo plugin in the pom.xml maven file - see the profiles for details
-                bat "mvn cargo:redeploy -Dcargo.hostname=\"${params.prod_hostname}\" -Dcargo.servlet.port=\"${params.prod_port}\" -Dcargo.username=\"${params.prod_username}\" -Dcargo.password=\"${params.prod_password}\""
+                sh "mvn cargo:redeploy -Dcargo.hostname=\"${params.prod_hostname}\" -Dcargo.servlet.port=\"${params.prod_port}\" -Dcargo.username=\"${params.prod_username}\" -Dcargo.password=\"${params.prod_password}\""
             }
             post {
                 success {
