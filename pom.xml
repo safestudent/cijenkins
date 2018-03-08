@@ -142,6 +142,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <jvmArguments>-Xmx512m -XX:MaxDirectMemorySize=1200m</jvmArguments>
+                    <finalName>safebear</finalName>
+                </configuration>
                 <executions>
                     <execution>
                         <id>pre-integration-test</id>
@@ -152,9 +156,6 @@
                         <goals><goal>stop</goal></goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <finalName>safebear</finalName>
-                </configuration>
             </plugin>
             <!-- Cargo-Plugin: Hot deploy to remote tomcat8x running instance -->
             <plugin>
