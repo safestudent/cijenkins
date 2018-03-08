@@ -8,6 +8,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import static junit.framework.TestCase.assertTrue;
 
@@ -43,7 +44,11 @@ public class StepDefs {
      */
     @Before
     public void setUp(){
-        driver = new ChromeDriver();
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("headless");
+
+        driver = new ChromeDriver(options);
         helloPage = new HelloPage(driver);
         addPage = new AddPage(driver);
     }
