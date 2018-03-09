@@ -22,9 +22,9 @@ pipeline {
         string(name: 'prod_password', defaultValue: 'tomcat', description: 'hostname of the test environment')
     }
 
-    triggers {
-        pollSCM('* * * * *')
-    }
+//    triggers {
+//        pollSCM('* * * * *')
+//    }
 
     // Pipeline stages
     stages {
