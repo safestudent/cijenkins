@@ -5,7 +5,7 @@ pipeline {
     * */
 
     //run on any agent
-    agent any
+    agent { label 'docker-slaves' }
 
     parameters {
 
